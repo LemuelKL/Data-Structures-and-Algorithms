@@ -1,13 +1,12 @@
 # Find the length of a cycle in a linked list
 # Possible number of cycles is 0 or 1
 
-from operator import le
-
 
 class Node:
     def __init__(self, value):
         self.value = value
         self.next = None
+
 
 def lengthofcycle(head: Node) -> int:
     slow = head
@@ -19,7 +18,7 @@ def lengthofcycle(head: Node) -> int:
             break
     if not fast or not fast.next:
         return 0
-    
+
     l = 1
     slow = slow.next
     while slow != fast:
