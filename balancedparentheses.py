@@ -22,38 +22,38 @@
 
 
 def solution(n, str, k):
-    idx = 0
+    if (k < 1):
+        return 0
+
     fill = 0
-    num_underflow = 0
-    check_underflow = True
-    num_overflow = 0
-    check_overflow = True
-
-    while idx < n:
-        p = str[idx]
-        if p == '(':
+    for p in str:
+        if p == "(":
             fill += 1
-        else:
+        elif p == ")":
             fill -= 1
-        # print(p, fill)
-        if (check_underflow and fill == 0):
-            num_underflow = n - idx
-            check_underflow = False
-        if (check_overflow and fill > k):
-            num_overflow = idx + 1
-            check_overflow = False
+        if fill < 0 or fill - 1 > k:
+            return 0
+
+    fill = 0;
+    answer = 1;
+    for i in range(1, n):
+        if (str[i] == '('):
+            fill += 1
+        elif (str[i] == ')'):
+            fill -= 1
         
-        idx += 1
+        if (fill < 0):
+            return answer
+        if (fill + 1 <= k):
+            answer += 1
+        elif (fill == k):
+            answer = 0
     
-    # print(num_underflow, num_overflow)
-    return n - num_underflow - num_overflow
+    return answer;
 
 
-print(solution(6, '()()()', 2))
-print(solution(6, '(()())', 3))
-print(solution(6, '((()))', 2))
-print(solution(6, '(())()', 1))
+print(solution(6, "()()()", 2))
+print(solution(6, "(()())", 3))
+print(solution(6, "((()))", 2))
+print(solution(6, "(())()", 1))
 
-# Key observation
-# No. of underflow = no. of parentheses at and after first encounter of 0
-# No. of overflow = no. of parentheses at and before first encounter of fill > k
